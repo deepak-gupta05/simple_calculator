@@ -24,15 +24,21 @@ for (let i = 0; i < all_buttons.length; i++)
       ))
     ) {
       if (this.innerHTML.match("^[0-9]")) {
-        if (store_pre_result.clientHeight < store_pre_result.scrollHeight)
+        if (
+          ((checkFirstZero = !1),
+          store_pre_result.clientHeight < store_pre_result.scrollHeight)
+        )
           return void (store_pre_result.style.fontSize = "2rem");
         if (estore) {
           (input_number.value = ""),
             (store_pre_result.innerHTML =
               store_pre_result.innerHTML + "" + this.innerHTML);
           let e = store_pre_result.innerHTML,
-            r = Function("return " + e)();
-          (input_number.value = r), (changeOperator = !1);
+            r = Function("return " + e)(),
+            t = 1e5 * r;
+          (t = Math.floor(t)),
+            (input_number.value = t / 1e5),
+            (changeOperator = !1);
         } else
           (store_pre_result.innerHTML =
             store_pre_result.innerHTML + "" + this.innerHTML),
@@ -87,9 +93,12 @@ for (let i = 0; i < all_buttons.length; i++)
         ((estore = !0),
         (input_number.style.fontSize = "2.5rem"),
         (store_pre_result.style.fontSize = "2rem"),
-        (store_pre_result.innerHTML = input_number.value)),
+        (store_pre_result.innerHTML = input_number.value),
+        (changeOperator = !1)),
         ["C", "AC"].includes(this.innerHTML) &&
-          ((store_pre_result.innerHTML = ""), (input_number.value = "")),
+          ((store_pre_result.innerHTML = ""),
+          (input_number.value = ""),
+          (estore = !1)),
         "X" === this.innerHTML &&
           ((store_pre_result.innerHTML = store_pre_result.innerHTML.substring(
             0,
@@ -130,8 +139,11 @@ document.addEventListener("keyup", function (e) {
           (store_pre_result.innerHTML =
             store_pre_result.innerHTML + "" + e.key);
         let r = store_pre_result.innerHTML,
-          t = Function("return " + r)();
-        (input_number.value = t), (changeOperator = !1);
+          t = Function("return " + r)(),
+          n = 1e5 * t;
+        (n = Math.floor(n)),
+          (input_number.value = n / 1e5),
+          (changeOperator = !1);
       } else
         (store_pre_result.innerHTML += e.key), (input_number.value += e.key);
     }
@@ -183,7 +195,8 @@ document.addEventListener("keyup", function (e) {
       ((estore = !0),
       (input_number.style.fontSize = "2.5rem"),
       (store_pre_result.style.fontSize = "2rem"),
-      (store_pre_result.innerHTML = input_number.value)),
+      (store_pre_result.innerHTML = input_number.value),
+      (changeOperator = !1)),
       ("Escape" !== e.key && "escape" !== e.key) ||
         ((store_pre_result.innerHTML = ""),
         (input_number.value = ""),
